@@ -69,6 +69,12 @@ resource "aws_iam_policy" "terraform_policy" {
         Resource = "*"
       },
       {
+        Sid      = "AllowSSMReadServiceParameters"
+        Effect   = "Allow"
+        Action   = ["ssm:GetParameter", "ssm:GetParameters"]
+        Resource = "arn:aws:ssm:*:*:parameter/aws/service/*"
+      },
+      {
         Sid    = "IAMDeny"
         Effect = "Deny"
         Action = [
