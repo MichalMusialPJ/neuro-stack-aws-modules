@@ -14,7 +14,7 @@ Terraform module for GitHub Actions OIDC provider and IAM role.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.40.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.38 |
 
 ## Modules
 
@@ -32,6 +32,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_allowed_subjects"></a> [allowed\_subjects](#input\_allowed\_subjects) | (Optional) GitHub OIDC subject suffixes allowed to assume the role, e.g. ref:refs/heads/main, pull\_request, environment:production | `list(string)` | <pre>[<br/>  "ref:refs/heads/main"<br/>]</pre> | no |
 | <a name="input_aws_account_id"></a> [aws\_account\_id](#input\_aws\_account\_id) | (Required) AWS account ID for arn | `string` | n/a | yes |
 | <a name="input_create_provider"></a> [create\_provider](#input\_create\_provider) | Toggle if you want to create provider | `bool` | `true` | no |
 | <a name="input_create_role"></a> [create\_role](#input\_create\_role) | Toggle if you want to create role for provider | `bool` | `true` | no |
