@@ -13,6 +13,7 @@ is self-contained, and is documented with [terraform-docs](https://terraform-doc
 | [`eks`](./eks) | EKS cluster with managed node groups, IAM/IRSA, OIDC, addons, KMS secret encryption, and security groups. |
 | [`kms`](./kms) | Customer-managed KMS key with a flexible, statement-based key policy. |
 | [`gh_oidc`](./gh_oidc) | GitHub Actions OIDC provider + IAM role for keyless CI/CD authentication. |
+| [`iam`](./iam) | IAM role with flexible trust (IRSA, AWS service, IAM principal, or custom policy) and inline/managed policy attachments. |
 
 See each module's `README.md` for its full inputs, outputs, and resources.
 
@@ -54,6 +55,24 @@ module "kms" {
   description = "neuro-stack secrets encryption"
 }
 ```
+
+### IAM role (IRSA example)
+
+```hcl
+module "karpenter_iam" {
+  source = "github.com/MichalMusialPJ/neuro-stack-aws-modules//iam?ref=v1.1.0"
+
+  name_prefix          = "prod-neuro-stack"
+  role_name            = "karpenter"
+  oidc_provider_arn    = module.eks.oidc_provider_arn
+  oidc_provider_url    = module.eks.oidc_provider_url
+  namespace            = "karpenter"
+  service_account_name = "karpenter"
+  policy_json          = jsonencode({ Version = "2012-10-17", Statement = [] })
+}
+```
+
+For a service role (e.g. EC2), set `service_principals = ["ec2.amazonaws.com"]` and `create_instance_profile = true` instead of the IRSA inputs.
 
 ## Regenerating docs
 
