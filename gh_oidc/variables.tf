@@ -24,6 +24,12 @@ variable "github_repo" {
   type        = string
 }
 
+variable "allowed_subjects" {
+  description = "(Optional) GitHub OIDC subject suffixes allowed to assume the role, e.g. ref:refs/heads/main, pull_request, environment:production"
+  type        = list(string)
+  default     = ["ref:refs/heads/main"]
+}
+
 variable "policy_arns" {
   description = "(Optional) Additional policy arn for github oidc role"
   type        = list(string)

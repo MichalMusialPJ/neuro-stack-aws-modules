@@ -30,7 +30,7 @@ resource "aws_iam_role" "this" {
         Condition = {
           StringEquals = {
             # This condition restricts the role to your specific GitHub repository
-            "token.actions.githubusercontent.com:sub" = "repo:${var.github_org}/${var.github_repo}:ref:refs/heads/main"
+            "token.actions.githubusercontent.com:sub" = [for s in var.allowed_subjects : "repo:${var.github_org}/${var.github_repo}:${s}"]
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
           }
         }
